@@ -1,4 +1,4 @@
-node {
+node ('window_slave') {
 	stage 'Checkout'
 		checkout scm
 
