@@ -1,13 +1,22 @@
-node ('windows_slave') {
-	stage 'Checkout'
-		checkout scm
+properties = null
+def loadProperties() {
+    node {
+        properties = readProperties file: 'MyCustom'
+    }
+}
 
-	stage 'Build'
-		echo "Hi This is Build"
-	stage 'Test'
-		echo "All tests are passed"
-		exit 1
-	stage 'upload'
-		echo "Uploading content"
+pipeline {
+    agent any
 
+    stages {
+        stage('Hello') {
+            steps {
+                script{
+                    loadProperties()
+                }
+                echo "Hello ${properties.name}"
+                echo "${workspace}"
+            }
+        }
+    }
 }
